@@ -5,25 +5,14 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Expense {
+public class Expense  extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private LocalDateTime date;
     private String description;
     private BigDecimal amount;
 
     @OneToOne
     private Category category;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDateTime getDate() {
         return date;
