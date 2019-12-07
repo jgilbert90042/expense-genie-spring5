@@ -1,6 +1,8 @@
 package com.gilbertcon.expensegeniespring5.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -11,7 +13,8 @@ public class Expense  extends BaseEntity {
     private String description;
     private BigDecimal amount;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public LocalDateTime getDate() {
