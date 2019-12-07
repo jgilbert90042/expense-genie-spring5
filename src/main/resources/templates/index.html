@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense List</title>
+</head>
+<body>
+    <h2>Expenses</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+        </tr>
+        <tr th:each="expense: ${expenses}">
+            <td th:text="${expense.id}">1</td>
+            <td th:text="${expense.date}">12/12/12 12:12</td>
+            <td th:text="${expense.description}">This is a placeholder expense</td>
+            <td th:text="${expense.amount}">12.12</td>
+            <td th:text="${expense.category.description}">Food</td>
+        </tr>
+    </table>
+</body>
+</html>
