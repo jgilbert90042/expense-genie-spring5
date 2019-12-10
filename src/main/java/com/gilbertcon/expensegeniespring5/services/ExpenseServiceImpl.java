@@ -10,7 +10,7 @@ import java.util.Set;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     public ExpenseServiceImpl(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;
