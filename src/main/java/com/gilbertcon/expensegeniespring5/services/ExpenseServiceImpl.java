@@ -17,9 +17,29 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Set<Expense> getExpenses() {
+    public Set<Expense> findAll() {
         Set<Expense> expenseSet = new HashSet<>();
-        expenseRepository.findAll().iterator().forEachRemaining(expenseSet::add);
+        expenseRepository.findAll().forEach(expenseSet::add);
         return expenseSet;
+    }
+
+    @Override
+    public Expense findById(Long id) {
+        return expenseRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Expense save(Expense object) {
+        return expenseRepository.save(object);
+    }
+
+    @Override
+    public void delete(Expense object) {
+        expenseRepository.delete(object);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        expenseRepository.deleteById(id);
     }
 }

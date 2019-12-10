@@ -2,10 +2,8 @@ package com.gilbertcon.expensegeniespring5.services;
 
 import com.gilbertcon.expensegeniespring5.model.Expense;
 
-import java.util.Set;
+public interface ExpenseService extends CrudService<Expense, Long> {
 
-public interface ExpenseService {
-
-    Set<Expense> getExpenses();
+    // Add in a find by month method
 
 }
