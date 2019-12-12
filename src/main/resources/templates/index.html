@@ -1,27 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Expense List</title>
 </head>
 <body>
-    <h2>Expenses</h2>
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Category</th>
-        </tr>
-        <tr th:each="expense: ${expenses}">
-            <td th:text="${expense.id}">1</td>
-            <td th:text="${expense.date}">12/12/12 12:12</td>
-            <td th:text="${expense.description}">This is a placeholder expense</td>
-            <td th:text="${expense.amount}">12.12</td>
-            <td th:text="${expense.category.description}">Food</td>
-        </tr>
-    </table>
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Expenses</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" th:if="${not #lists.isEmpty(expenses)}">
+                            <table class="table table-hover">
+                                <thead class="thead-inverse">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Category</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="expense: ${expenses}">
+                                    <td th:text="${expense.id}">1</td>
+                                    <td th:text="${#dates.format(expense.date, 'MM/dd/yyyy')}">12/12/12</td>
+                                    <td th:text="${expense.description}">This is a placeholder expense</td>
+                                    <td th:text="'$' + ${expense.amount}">12.12</td>
+                                    <td th:text="${expense.category.description}">Food</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
