@@ -105,9 +105,9 @@
                             <includes>
                                 <include>**/*IT.java</include>
                             </includes>
-<!--                            <additionalClasspathElements>
+                            <additionalClasspathElements>
                                 <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
-                            </additionalClasspathElements> -->
+                            </additionalClasspathElements>
                             <parallel>none</parallel>
                         </configuration>
                     </execution>
