@@ -1,9 +1,6 @@
 package com.gilbertcon.expensegeniespring5.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 
@@ -13,6 +10,12 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @Entity
 public class Category extends BaseEntity {
+
+    @Builder
+    public Category(Long id, String description) {
+        super(id);
+        this.description = description;
+    }
 
     private String description;
 

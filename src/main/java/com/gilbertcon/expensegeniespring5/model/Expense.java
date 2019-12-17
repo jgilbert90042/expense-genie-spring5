@@ -12,9 +12,16 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class Expense  extends BaseEntity {
+
+    @Builder
+    public Expense(Long id, Date date, String description, BigDecimal amount) {
+        super(id);
+        this.date = date;
+        this.description = description;
+        this.amount = amount;
+    }
 
     private Date date;
     private String description;
