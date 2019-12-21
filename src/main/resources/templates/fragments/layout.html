@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:fragment="layout (template, menu)">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+
+    <title>Expense Genie - Simple Expense Tracker in Spring</title>
+
+</head>
+<body>
+
+<th:block th:include="${template}"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+        crossorigin="anonymous" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        crossorigin="anonymous" th:src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
