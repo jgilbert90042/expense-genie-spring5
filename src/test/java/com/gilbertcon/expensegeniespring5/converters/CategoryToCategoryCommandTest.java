@@ -30,12 +30,15 @@ class CategoryToCategoryCommandTest {
 
     @Test
     void convert() {
+        //given
         Category category = new Category();
         category.setId(ID_VALUE);
         category.setDescription(DESCRIPTION);
 
+        //when
         CategoryCommand categoryCommand = converter.convert(category);
 
+        //then
         assertEquals(ID_VALUE, categoryCommand.getId());
         assertEquals(DESCRIPTION, categoryCommand.getDescription());
     }

@@ -37,60 +37,80 @@ class CategoryServiceImplTest {
 
     @Test
     void findAll() {
+
+        // given
         Set<Category> returnCategoriesSet = new HashSet<>();
         returnCategoriesSet.add(Category.builder().id(1L).build());
         returnCategoriesSet.add(Category.builder().id(2L).build());
 
         when(categoryRepository.findAll()).thenReturn(returnCategoriesSet);
 
+        // when
         Set<Category> categories = categoryService.findAll();
 
+        // then
         assertNotNull(categories);
         assertEquals(2, categories.size());
     }
 
     @Test
     void findById() {
+        // given
         when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(returnCategory));
 
+        // when
         Category category = categoryService.findById(1L);
 
+        // then
         assertNotNull(category);
     }
 
     @Test
     void findByIdNotNull() {
+
+        // given
         when(categoryRepository.findById(anyLong())).thenReturn(Optional.empty());
 
+        // when
         Category category = categoryService.findById(1L);
 
+        // then
         assertNull(category);
     }
 
     @Test
     void save() {
 
+        // given
         Category categoryToSave = Category.builder().id(1L).build();
 
         when(categoryRepository.save(any())).thenReturn(returnCategory);
 
+        // when
         Category savedCategory = categoryService.save(categoryToSave);
 
+        // then
         assertNotNull(savedCategory);
-
         verify(categoryRepository).save(any());
     }
 
     @Test
     void delete() {
+
+        // when
         categoryService.delete(returnCategory);
 
+        // then
         verify(categoryRepository).delete(any());
     }
 
     @Test
     void deleteById() {
+
+        // when
         categoryService.deleteById(1L);
+
+        // then
         verify(categoryRepository).deleteById(anyLong());
     }
 }

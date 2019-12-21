@@ -39,6 +39,7 @@ class ExpenseCommandToExpenseTest {
     @Test
     void convert() {
 
+        // given
         ExpenseCommand expenseCommand = new ExpenseCommand();
         expenseCommand.setId(ID_VALUE);
         expenseCommand.setAmount(AMOUNT);
@@ -49,8 +50,10 @@ class ExpenseCommandToExpenseTest {
         categoryCommand.setId(CATEGORY_ID);
         expenseCommand.setCategoryCommand(categoryCommand);
 
+        // when
         Expense expense = converter.convert(expenseCommand);
 
+        // then
         assertNotNull(expense);
         assertNotNull(expense.getCategory());
         assertEquals(ID_VALUE, expense.getId());
@@ -64,15 +67,17 @@ class ExpenseCommandToExpenseTest {
     @Test
     public void convertWithNullCategory() {
 
+        // given
         ExpenseCommand expenseCommand = new ExpenseCommand();
         expenseCommand.setId(ID_VALUE);
         expenseCommand.setAmount(AMOUNT);
         expenseCommand.setDescription(DESCRIPTION);
         expenseCommand.setDate(DATE);
-        CategoryCommand categoryCommand = new CategoryCommand();
 
+        // when
         Expense expense = converter.convert(expenseCommand);
 
+        // then
         assertNotNull(expense);
         assertNull(expense.getCategory());
         assertEquals(ID_VALUE, expense.getId());

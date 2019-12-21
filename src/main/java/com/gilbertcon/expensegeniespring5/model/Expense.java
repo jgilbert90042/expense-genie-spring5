@@ -2,9 +2,7 @@ package com.gilbertcon.expensegeniespring5.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,6 +21,7 @@ public class Expense  extends BaseEntity {
         this.amount = amount;
     }
 
+    @Temporal(TemporalType.DATE)
     private Date date;
     private String description;
     private BigDecimal amount;

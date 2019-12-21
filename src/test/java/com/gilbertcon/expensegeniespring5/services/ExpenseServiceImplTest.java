@@ -36,60 +36,75 @@ class ExpenseServiceImplTest {
 
     @Test
     void findAll() {
+        // given
         Set<Expense> returnExpensesSet = new HashSet<>();
         returnExpensesSet.add(Expense.builder().id(1L).build());
         returnExpensesSet.add(Expense.builder().id(2L).build());
 
         when(expenseRepository.findAll()).thenReturn(returnExpensesSet);
 
+        // when
         Set<Expense> expenses = expenseService.findAll();
 
+        // then
         assertNotNull(expenses);
         assertEquals(2, expenses.size());
     }
 
     @Test
     void findById() {
+        // given
         when(expenseRepository.findById(anyLong())).thenReturn(Optional.of(returnExpense));
 
+        // when
         Expense expense = expenseService.findById(1L);
 
+        // then
         assertNotNull(expense);
     }
 
     @Test
     void findByIdNotNull() {
+        // given
         when(expenseRepository.findById(anyLong())).thenReturn(Optional.empty());
 
+        //when
         Expense expense = expenseService.findById(1L);
 
+        // then
         assertNull(expense);
     }
 
     @Test
     void save() {
+        // given
         Expense expenseToSave = Expense.builder().id(1L).build();
 
         when(expenseRepository.save(any())).thenReturn(returnExpense);
 
+        // when
         Expense savedExpense = expenseService.save(expenseToSave);
 
+        // then
         assertNotNull(savedExpense);
-
         verify(expenseRepository).save(any());
     }
 
     @Test
     void delete() {
+        // when
         expenseService.delete(returnExpense);
 
+        // then
         verify(expenseRepository).delete(any());
     }
 
     @Test
     void deleteById() {
+        // when
         expenseService.deleteById(1L);
 
+        // then
         verify(expenseRepository).deleteById(any());
     }
 }
