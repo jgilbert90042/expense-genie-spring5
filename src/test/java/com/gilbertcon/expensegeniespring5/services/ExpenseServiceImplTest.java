@@ -107,4 +107,14 @@ class ExpenseServiceImplTest {
         // then
         verify(expenseRepository).deleteById(any());
     }
+
+    @Test
+    void findCommandById() {
+        assertNull(1); // guaranteed to fail
+    }
+
+    @Test
+    void saveExpenseCommand() {
+        assertNull(1); // guaranteed to fail
+    }
 }

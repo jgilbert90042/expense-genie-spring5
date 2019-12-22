@@ -1,5 +1,8 @@
 package com.gilbertcon.expensegeniespring5.services;
 
+import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
+import com.gilbertcon.expensegeniespring5.converters.ExpenseCommandToExpense;
+import com.gilbertcon.expensegeniespring5.converters.ExpenseToExpenseCommand;
 import com.gilbertcon.expensegeniespring5.model.Expense;
 import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,8 @@ import java.util.Set;
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
+    private final ExpenseToExpenseCommand expenseToExpenseCommand;
+    private final ExpenseCommandToExpense expenseCommandToExpense;
 
     @Override
     public Set<Expense> findAll() {
@@ -39,5 +44,16 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void deleteById(Long id) {
         expenseRepository.deleteById(id);
+    }
+
+    @Override
+    public ExpenseCommand findCommandById(Long id) {
+        return expenseToExpenseCommand.convert(findById(id));
+    }
+
+    @Override
+    public ExpenseCommand saveExpenseCommand(ExpenseCommand command) {
+        Expense expense = expenseRepository.save(expenseCommandToExpense.convert(command));
+        return expenseToExpenseCommand.convert(expense);
     }
 }
