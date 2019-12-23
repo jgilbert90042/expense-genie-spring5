@@ -48,7 +48,7 @@ class ExpenseCommandToExpenseTest {
 
         CategoryCommand categoryCommand = new CategoryCommand();
         categoryCommand.setId(CATEGORY_ID);
-        expenseCommand.setCategoryCommand(categoryCommand);
+        expenseCommand.setCategory(categoryCommand);
 
         // when
         Expense expense = converter.convert(expenseCommand);

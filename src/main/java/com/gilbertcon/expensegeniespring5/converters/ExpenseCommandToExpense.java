@@ -28,7 +28,7 @@ public class ExpenseCommandToExpense implements Converter<ExpenseCommand, Expens
         expense.setDescription(source.getDescription());
         expense.setDate(source.getDate());
         expense.setAmount(source.getAmount());
-        expense.setCategory(categoryConverter.convert(source.getCategoryCommand()));
+        expense.setCategory(categoryConverter.convert(source.getCategory()));
 
         return expense;
 

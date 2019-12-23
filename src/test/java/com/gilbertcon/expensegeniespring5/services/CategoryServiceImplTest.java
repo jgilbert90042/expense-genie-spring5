@@ -1,13 +1,13 @@
 package com.gilbertcon.expensegeniespring5.services;
 
+import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
+import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -19,20 +19,22 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class CategoryServiceImplTest {
+
+    CategoryToCategoryCommand categoryToCategoryCommand = new CategoryToCategoryCommand();
+    CategoryService categoryService;
 
     @Mock
     CategoryRepository categoryRepository;
-
-    @InjectMocks
-    CategoryServiceImpl categoryService;
 
     Category returnCategory;
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         returnCategory = Category.builder().id(1L).build();
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryToCategoryCommand);
     }
 
     @Test
@@ -112,5 +114,29 @@ class CategoryServiceImplTest {
 
         // then
         verify(categoryRepository).deleteById(anyLong());
+    }
+
+    @Test
+    void findAllCommand() {
+
+        // Given
+        Set<Category> categories = new HashSet<>();
+        Category category1 = new Category();
+        category1.setId(1L);
+        categories.add(category1);
+
+        Category category2 = new Category();
+        category2.setId(2L);
+        categories.add(category2);
+
+        when(categoryRepository.findAll()).thenReturn(categories);
+
+        // When
+        Set<CategoryCommand> categoryCommands = categoryService.findAllCommand();
+
+        //then
+        assertEquals(2, categoryCommands.size());
+        verify(categoryRepository).findAll();
+
     }
 }

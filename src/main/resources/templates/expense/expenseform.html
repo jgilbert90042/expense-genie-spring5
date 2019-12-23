@@ -48,7 +48,7 @@
                                     <select class="form-control" name="category.id">
                                         <option th:each="categoryEach : ${categoryList}"
                                                 th:value="${categoryEach.id}"
-                                                th:selected="${categoryEach.id.equals(expense.categoryCommand.id)}"
+                                                th:selected="${categoryEach.id.equals(expense.category?.id)}"
                                                 th:text="${categoryEach.description}">Food</option>
                                     </select>
                                 </div>

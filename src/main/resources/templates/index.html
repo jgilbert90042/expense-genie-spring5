@@ -30,6 +30,7 @@
                                     <th>Description</th>
                                     <th>Amount</th>
                                     <th>Category</th>
+                                    <th>Update</th>
                                 </tr>
                                 </thead>
                                 <tr th:each="expense: ${expenses}">
@@ -37,7 +38,8 @@
                                     <td th:text="${#dates.format(expense.date, 'MM/dd/yyyy')}">12/12/12</td>
                                     <td th:text="${expense.description}">This is a placeholder expense</td>
                                     <td th:text="'$' + ${expense.amount}">12.12</td>
-                                    <td th:text="${expense.category.description}">Food</td>
+                                    <td th:text="${expense.category?.description}">Food</td>
+                                    <td><a href="#" th:href="@{'/expense/' + ${expense.id} + '/update'}">Update</a></td>
                                 </tr>
                             </table>
 

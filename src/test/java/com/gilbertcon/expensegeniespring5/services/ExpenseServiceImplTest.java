@@ -1,13 +1,18 @@
 package com.gilbertcon.expensegeniespring5.services;
 
+import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
+import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
+import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
+import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
+import com.gilbertcon.expensegeniespring5.converters.ExpenseCommandToExpense;
+import com.gilbertcon.expensegeniespring5.converters.ExpenseToExpenseCommand;
+import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.model.Expense;
 import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -19,19 +24,30 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class ExpenseServiceImplTest {
+
+    CategoryToCategoryCommand categoryToCategoryCommand = new CategoryToCategoryCommand();
+    CategoryCommandToCategory categoryCommandToCategory = new CategoryCommandToCategory();
+
+    ExpenseToExpenseCommand expenseToExpenseCommand = new ExpenseToExpenseCommand(categoryToCategoryCommand);
+    ExpenseCommandToExpense expenseCommandToExpense = new ExpenseCommandToExpense(categoryCommandToCategory);
+
 
     @Mock
     ExpenseRepository expenseRepository;
 
-    @InjectMocks
     ExpenseServiceImpl expenseService;
 
     Expense returnExpense;
+
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         returnExpense = Expense.builder().id(1L).build();
+
+        expenseService =  new ExpenseServiceImpl(expenseRepository, expenseToExpenseCommand, expenseCommandToExpense);
+
     }
 
     @Test
@@ -110,11 +126,34 @@ class ExpenseServiceImplTest {
 
     @Test
     void findCommandById() {
-        assertNull(1); // guaranteed to fail
+        // given
+        when(expenseRepository.findById(anyLong())).thenReturn(Optional.of(returnExpense));
+
+        // when
+        ExpenseCommand expenseCommand = expenseService.findCommandById(1L);
+
+        // then
+        assertNotNull(expenseCommand);
     }
 
     @Test
     void saveExpenseCommand() {
-        assertNull(1); // guaranteed to fail
+
+        // given
+        CategoryCommand categoryCommand = categoryToCategoryCommand.convert(Category.builder().id(1L)
+                .description("This is a description.").build());
+        ExpenseCommand expenseCommandToSave = expenseToExpenseCommand.convert(Expense.builder().id(1L).build());
+
+        expenseCommandToSave.setCategory(categoryCommand);
+
+        when(expenseRepository.save(any())).thenReturn(expenseCommandToExpense.convert(expenseCommandToSave));
+
+        // when
+        ExpenseCommand savedExpenseCommand = expenseService.saveExpenseCommand(expenseCommandToSave);
+
+        // then
+        assertNotNull(savedExpenseCommand);
+        assertNotNull(savedExpenseCommand.getCategory());
+        verify(expenseRepository).save(any());
     }
 }

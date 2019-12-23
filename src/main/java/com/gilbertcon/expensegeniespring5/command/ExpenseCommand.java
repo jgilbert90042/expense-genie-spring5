@@ -18,5 +18,5 @@ public class ExpenseCommand {
     @DateTimeFormat(pattern = "MM/dd/yyy")
     private Date date;
     private BigDecimal amount;
-    private CategoryCommand categoryCommand;
+    private CategoryCommand category;
 }

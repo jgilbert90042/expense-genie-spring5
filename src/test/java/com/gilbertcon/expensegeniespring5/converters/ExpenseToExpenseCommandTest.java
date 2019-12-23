@@ -55,12 +55,12 @@ class ExpenseToExpenseCommandTest {
 
         // then
         assertNotNull(expenseCommand);
-        assertNotNull(expenseCommand.getCategoryCommand());
+        assertNotNull(expenseCommand.getCategory());
         assertEquals(ID_VALUE, expenseCommand.getId());
         assertEquals(AMOUNT, expenseCommand.getAmount());
         assertEquals(DESCRIPTION, expense.getDescription());
         assertEquals(DATE, expenseCommand.getDate());
-        assertEquals(CATEGORY_ID, expenseCommand.getCategoryCommand().getId());
+        assertEquals(CATEGORY_ID, expenseCommand.getCategory().getId());
     }
 
     @Test
@@ -78,7 +78,7 @@ class ExpenseToExpenseCommandTest {
 
         // then
         assertNotNull(expenseCommand);
-        assertNull(expenseCommand.getCategoryCommand());
+        assertNull(expenseCommand.getCategory());
         assertEquals(ID_VALUE, expenseCommand.getId());
         assertEquals(AMOUNT, expenseCommand.getAmount());
         assertEquals(DESCRIPTION, expense.getDescription());
