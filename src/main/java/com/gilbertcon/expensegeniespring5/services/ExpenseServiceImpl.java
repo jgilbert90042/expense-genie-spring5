@@ -53,7 +53,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseCommand saveExpenseCommand(ExpenseCommand command) {
+
         Expense expense = expenseRepository.save(expenseCommandToExpense.convert(command));
+
         return expenseToExpenseCommand.convert(expense);
     }
 }

@@ -156,4 +156,5 @@ class ExpenseServiceImplTest {
         assertNotNull(savedExpenseCommand.getCategory());
         verify(expenseRepository).save(any());
     }
+
 }

@@ -1,5 +1,6 @@
 package com.gilbertcon.expensegeniespring5.controllers;
 
+import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
 import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
 import com.gilbertcon.expensegeniespring5.services.CategoryService;
 import com.gilbertcon.expensegeniespring5.services.ExpenseService;
@@ -14,6 +15,20 @@ public class ExpenseController {
 
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
+
+    @GetMapping
+    @RequestMapping("/expense/new")
+    public String newExpense(Model model) {
+
+        ExpenseCommand expenseCommand = new ExpenseCommand();
+        expenseCommand.setCategory(new CategoryCommand());
+        model.addAttribute("expense", expenseCommand);
+
+        model.addAttribute("categoryList", categoryService.findAllCommand());
+
+        return "expense/expenseform";
+
+    }
 
     @GetMapping
     @RequestMapping("/expense/{expenseId}/update")

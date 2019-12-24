@@ -40,6 +40,23 @@ class ExpenseControllerTest {
     }
 
     @Test
+    void newExpense() throws Exception {
+
+        //given
+        ExpenseCommand expenseCommand = new ExpenseCommand();
+
+        when(categoryService.findAllCommand()).thenReturn(new HashSet<>());
+
+        //when - then
+        mockMvc.perform(get("/expense/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("expense/expenseform"))
+                .andExpect(model().attributeExists("expense"))
+                .andExpect(model().attributeExists("categoryList"));
+
+    }
+
+    @Test
     void updateExpense() throws Exception {
 
         //given
