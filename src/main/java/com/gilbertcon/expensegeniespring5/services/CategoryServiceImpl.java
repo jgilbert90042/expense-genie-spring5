@@ -5,10 +5,12 @@ import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
 import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
+import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,6 +20,7 @@ import java.util.stream.StreamSupport;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ExpenseRepository expenseRepository;
     private final CategoryToCategoryCommand categoryToCategoryCommand;
     private final CategoryCommandToCategory categoryCommandToCategory;
 
@@ -39,13 +42,37 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Category object) {
-        categoryRepository.delete(object);
+    public void delete(Category category) {
+
+        expenseRepository.findAll().iterator().forEachRemaining(expense -> {
+            if (expense.getCategory() == category) {
+                expense.setCategory(null);
+                expenseRepository.save(expense);
+            }
+        });
+
+        categoryRepository.delete(category);
     }
 
     @Override
     public void deleteById(Long id) {
-        categoryRepository.deleteById(id);
+
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+
+        if (!categoryOptional.isPresent()) {
+            return;
+        }
+
+        final Category category = categoryOptional.get();
+
+        expenseRepository.findAll().iterator().forEachRemaining(expense -> {
+            if (expense.getCategory() == category) {
+                expense.setCategory(null);
+                expenseRepository.save(expense);
+            }
+        });
+
+        categoryRepository.delete(category);
     }
 
     @Override
@@ -67,4 +94,5 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryToCategoryCommand.convert(category);
     }
+
 }

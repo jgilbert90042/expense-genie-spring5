@@ -5,6 +5,7 @@ import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
 import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
+import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,6 +30,9 @@ class CategoryServiceImplTest {
     @Mock
     CategoryRepository categoryRepository;
 
+    @Mock
+    ExpenseRepository expenseRepository;
+
     Category returnCategory;
 
     @BeforeEach
@@ -36,7 +40,7 @@ class CategoryServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         returnCategory = Category.builder().id(1L).build();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryToCategoryCommand, categoryCommandToCategory);
+        categoryService = new CategoryServiceImpl(categoryRepository, expenseRepository, categoryToCategoryCommand, categoryCommandToCategory);
     }
 
     @Test
@@ -110,12 +114,15 @@ class CategoryServiceImplTest {
 
     @Test
     void deleteById() {
+        Category category = new Category();
+
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
 
         // when
         categoryService.deleteById(1L);
 
         // then
-        verify(categoryRepository).deleteById(anyLong());
+        verify(categoryRepository).delete(any());
     }
 
     @Test
