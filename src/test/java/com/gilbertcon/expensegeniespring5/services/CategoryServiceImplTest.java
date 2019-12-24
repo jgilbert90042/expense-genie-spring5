@@ -1,6 +1,7 @@
 package com.gilbertcon.expensegeniespring5.services;
 
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
+import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
 import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.when;
 class CategoryServiceImplTest {
 
     CategoryToCategoryCommand categoryToCategoryCommand = new CategoryToCategoryCommand();
+    CategoryCommandToCategory categoryCommandToCategory = new CategoryCommandToCategory();
     CategoryService categoryService;
 
     @Mock
@@ -34,7 +36,7 @@ class CategoryServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         returnCategory = Category.builder().id(1L).build();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryToCategoryCommand);
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryToCategoryCommand, categoryCommandToCategory);
     }
 
     @Test
@@ -139,4 +141,29 @@ class CategoryServiceImplTest {
         verify(categoryRepository).findAll();
 
     }
+
+    @Test
+    void findCommandById() {
+
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(returnCategory));
+
+        CategoryCommand categoryCommand = categoryService.findCommandById(1L);
+
+        assertNotNull(categoryCommand);
+    }
+
+    @Test
+    void saveCategoryCommand() {
+
+        CategoryCommand categoryCommandToSave = new CategoryCommand();
+
+        when(categoryRepository.save(any())).thenReturn(categoryCommandToCategory.convert(categoryCommandToSave));
+
+        CategoryCommand savedCategoryCommand = categoryService.saveCategoryCommand(categoryCommandToSave);
+
+        assertNotNull(savedCategoryCommand);
+        verify(categoryRepository).save(any());
+
+    }
+
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'category')}">>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+
+    <title>Category List</title>
+</head>
+<body>
+<!--/*@thymesVar id="category" type="com.gilbertcon.expensegeniespring5.model.Category"*/-->
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Categories</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive" th:if="${not #lists.isEmpty(categories)}">
+                            <table class="table table-hover">
+                                <thead class="thead-inverse">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Update</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="category: ${categories}">
+                                    <td th:text="${category.id}">1</td>
+                                    <td th:text="${category.description}">Food</td>
+                                    <td><a href="#" th:href="@{'/category/' + ${category.id} + '/update'}">Update</a></td>
+                                    <td><a href="#" th:href="@{'/category/' + ${category.id} + '/delete'}">Delete</a></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <a href="#" th:href="${'/category/new'}"><button type="button" class="btn btn-primary">New Category</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

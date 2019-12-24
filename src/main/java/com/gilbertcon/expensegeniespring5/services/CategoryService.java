@@ -9,4 +9,8 @@ public interface CategoryService extends CrudService<Category, Long> {
 
     public Set<CategoryCommand> findAllCommand();
 
+    public CategoryCommand findCommandById(Long id);
+
+    public CategoryCommand saveCategoryCommand(CategoryCommand categoryCommand);
+
 }

@@ -1,6 +1,7 @@
 package com.gilbertcon.expensegeniespring5.services;
 
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
+import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
 import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
@@ -18,6 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryToCategoryCommand categoryToCategoryCommand;
+    private final CategoryCommandToCategory categoryCommandToCategory;
 
     @Override
     public Set<Category> findAll() {
@@ -52,5 +54,17 @@ public class CategoryServiceImpl implements CategoryService {
                 .spliterator(), false)
                 .map(categoryToCategoryCommand::convert)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public CategoryCommand findCommandById(Long id) {
+        return categoryToCategoryCommand.convert(findById(id));
+    }
+
+    @Override
+    public CategoryCommand saveCategoryCommand(CategoryCommand categoryCommand) {
+        Category category = categoryRepository.save(categoryCommandToCategory.convert(categoryCommand));
+
+        return categoryToCategoryCommand.convert(category);
     }
 }

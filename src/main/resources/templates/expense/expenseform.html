@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'expenseform')}">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -51,6 +51,9 @@
                                                 th:selected="${categoryEach.id.equals(expense.category?.id)}"
                                                 th:text="${categoryEach.description}">Food</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="#" th:href="${'/categories'}"><button type="button" class="btn btn-primary" style="margin-top: 31px;">List Categories</button></a>
                                 </div>
                             </div>
                         </div>

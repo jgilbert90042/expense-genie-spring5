@@ -12,6 +12,7 @@
     <title>Expense List</title>
 </head>
 <body>
+<!--/*@thymesVar id="expense" type="com.gilbertcon.expensegeniespring5.model.Expense"*/-->
     <div class="container-fluid" style="margin-top: 20px">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -31,6 +32,7 @@
                                     <th>Amount</th>
                                     <th>Category</th>
                                     <th>Update</th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tr th:each="expense: ${expenses}">
@@ -40,6 +42,7 @@
                                     <td th:text="'$' + ${expense.amount}">12.12</td>
                                     <td th:text="${expense.category?.description}">Food</td>
                                     <td><a href="#" th:href="@{'/expense/' + ${expense.id} + '/update'}">Update</a></td>
+                                    <td><a href="#" th:href="@{'/expense/' + ${expense.id} + '/delete'}">Delete</a></td>
                                 </tr>
                             </table>
 

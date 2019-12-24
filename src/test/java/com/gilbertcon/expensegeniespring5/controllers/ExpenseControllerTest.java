@@ -85,4 +85,12 @@ class ExpenseControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
+
+    @Test
+    void deleteExpense() throws Exception {
+
+        mockMvc.perform(get("/expense/1/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+    }
 }
