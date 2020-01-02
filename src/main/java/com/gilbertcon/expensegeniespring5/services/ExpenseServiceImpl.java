@@ -34,7 +34,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Optional<Expense> expenseOptional = expenseRepository.findById(id);
 
         if (!expenseOptional.isPresent()) {
-            throw new NotFoundException("Expense Not Found");
+            throw new NotFoundException("Expense Not Found for ID" + id.toString());
         }
 
         return expenseOptional.get();

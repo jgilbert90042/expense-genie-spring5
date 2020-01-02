@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> categoryOptional = categoryRepository.findById(id);
 
         if (!categoryOptional.isPresent()) {
-            throw new NotFoundException("Category Not Found");
+            throw new NotFoundException("Category Not Found for ID " + id);
         }
 
         return categoryOptional.get();
