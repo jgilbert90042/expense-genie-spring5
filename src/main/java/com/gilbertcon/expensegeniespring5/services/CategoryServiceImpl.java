@@ -3,6 +3,7 @@ package com.gilbertcon.expensegeniespring5.services;
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
 import com.gilbertcon.expensegeniespring5.converters.CategoryCommandToCategory;
 import com.gilbertcon.expensegeniespring5.converters.CategoryToCategoryCommand;
+import com.gilbertcon.expensegeniespring5.exceptions.NotFoundException;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.repositories.CategoryRepository;
 import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
@@ -33,7 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
+
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+
+        if (!categoryOptional.isPresent()) {
+            throw new NotFoundException("Category Not Found");
+        }
+
+        return categoryOptional.get();
     }
 
     @Override

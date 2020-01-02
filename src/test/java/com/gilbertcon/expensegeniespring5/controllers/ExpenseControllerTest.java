@@ -1,6 +1,7 @@
 package com.gilbertcon.expensegeniespring5.controllers;
 
 import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
+import com.gilbertcon.expensegeniespring5.exceptions.NotFoundException;
 import com.gilbertcon.expensegeniespring5.services.CategoryService;
 import com.gilbertcon.expensegeniespring5.services.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,6 +72,16 @@ class ExpenseControllerTest {
                 .andExpect(view().name("expense/expenseform"))
                 .andExpect(model().attributeExists("expense"))
                 .andExpect(model().attributeExists("categoryList"));
+
+    }
+
+    @Test
+    void updateExpenseNotFound() throws Exception {
+        when(expenseService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/expense/1/update"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
 
     }
 

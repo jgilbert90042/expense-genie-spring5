@@ -3,12 +3,14 @@ package com.gilbertcon.expensegeniespring5.services;
 import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
 import com.gilbertcon.expensegeniespring5.converters.ExpenseCommandToExpense;
 import com.gilbertcon.expensegeniespring5.converters.ExpenseToExpenseCommand;
+import com.gilbertcon.expensegeniespring5.exceptions.NotFoundException;
 import com.gilbertcon.expensegeniespring5.model.Expense;
 import com.gilbertcon.expensegeniespring5.repositories.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -28,7 +30,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense findById(Long id) {
-        return expenseRepository.findById(id).orElse(null);
+
+        Optional<Expense> expenseOptional = expenseRepository.findById(id);
+
+        if (!expenseOptional.isPresent()) {
+            throw new NotFoundException("Expense Not Found");
+        }
+
+        return expenseOptional.get();
     }
 
     @Override

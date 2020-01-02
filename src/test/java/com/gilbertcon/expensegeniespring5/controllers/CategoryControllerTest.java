@@ -1,6 +1,7 @@
 package com.gilbertcon.expensegeniespring5.controllers;
 
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
+import com.gilbertcon.expensegeniespring5.exceptions.NotFoundException;
 import com.gilbertcon.expensegeniespring5.model.Category;
 import com.gilbertcon.expensegeniespring5.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,6 +74,16 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("category/categoryform"))
                 .andExpect(model().attributeExists("category"));
+
+    }
+
+    @Test
+    void updateCategoryNotFound() throws Exception {
+        when(categoryService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/category/1/update"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
 
     }
 
