@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{categoryId}/update")
-    public String updateCategory(@PathVariable String categoryId, Model model) {
+    public String updateCategory(@PathVariable Long categoryId, Model model) {
 
         CategoryCommand categoryCommand = categoryService.findCommandById(categoryId);
 
