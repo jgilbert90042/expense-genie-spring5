@@ -16,8 +16,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping
-    @RequestMapping("/categories")
+    @GetMapping("/categories")
     public String listCategories(Model model) {
 
         model.addAttribute("categories", categoryService.findAll());
@@ -26,8 +25,7 @@ public class CategoryController {
 
     }
 
-    @GetMapping
-    @RequestMapping("/category/new")
+    @GetMapping("/category/new")
     public String newCategory(Model model) {
 
         CategoryCommand categoryCommand = new CategoryCommand();
@@ -37,9 +35,8 @@ public class CategoryController {
         return "category/categoryform";
     }
 
-    @GetMapping
-    @RequestMapping("/category/{categoryId}/update")
-    public String updateCategory(@PathVariable Long categoryId, Model model) {
+    @GetMapping("/category/{categoryId}/update")
+    public String updateCategory(@PathVariable String categoryId, Model model) {
 
         CategoryCommand categoryCommand = categoryService.findCommandById(categoryId);
 
@@ -49,8 +46,7 @@ public class CategoryController {
     }
 
 
-    @PostMapping
-    @RequestMapping("/category")
+    @PostMapping("/category")
     public String saveCategory(@ModelAttribute CategoryCommand categoryCommand) {
         categoryService.saveCategoryCommand(categoryCommand);
         return "redirect:/";
@@ -58,8 +54,8 @@ public class CategoryController {
 
     @GetMapping
     @RequestMapping("/category/{categoryId}/delete")
-    public String deleteCategory(@PathVariable Long categoryId) {
-        categoryService.deleteById(categoryId);
+    public String deleteCategory(@PathVariable String categoryId) {
+        categoryService.deleteById(Long.valueOf(categoryId));
         return "redirect:/";
     }
 

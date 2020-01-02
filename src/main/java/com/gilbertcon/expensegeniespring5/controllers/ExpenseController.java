@@ -19,8 +19,7 @@ public class ExpenseController {
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
 
-    @GetMapping
-    @RequestMapping("/expense/new")
+    @GetMapping("/expense/new")
     public String newExpense(Model model) {
 
         ExpenseCommand expenseCommand = new ExpenseCommand();
@@ -33,25 +32,22 @@ public class ExpenseController {
 
     }
 
-    @GetMapping
-    @RequestMapping("/expense/{expenseId}/update")
-    public String updateExpense(@PathVariable Long expenseId, Model model) {
-        model.addAttribute("expense", expenseService.findCommandById(expenseId));
+    @GetMapping("/expense/{expenseId}/update")
+    public String updateExpense(@PathVariable String expenseId, Model model) {
+        model.addAttribute("expense", expenseService.findCommandById(Long.valueOf(expenseId)));
         model.addAttribute("categoryList", categoryService.findAllCommand());
         return "expense/expenseform";
     }
 
-    @PostMapping
-    @RequestMapping("/expense")
+    @PostMapping("/expense")
     public String saveOrUpdate(@ModelAttribute ExpenseCommand command) {
         expenseService.saveExpenseCommand(command);
         return "redirect:/";
     }
 
-    @GetMapping
-    @RequestMapping("/expense/{expenseId}/delete")
-    public String deleteExpense(@PathVariable Long expenseId) {
-        expenseService.deleteById(expenseId);
+    @GetMapping("/expense/{expenseId}/delete")
+    public String deleteExpense(@PathVariable String expenseId) {
+        expenseService.deleteById(Long.valueOf(expenseId));
         return "redirect:/";
     }
 
