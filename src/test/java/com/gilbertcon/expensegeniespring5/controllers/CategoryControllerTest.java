@@ -99,7 +99,18 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void saveOrUpdate() throws Exception {
+    void saveOrUpdateInvalid() throws Exception {
+
+        mockMvc.perform(post("/category")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("category/categoryform"));
+    }
+
+    @Test
+    void saveOrUpdateValid() throws Exception {
 
         mockMvc.perform(post("/category")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)

@@ -3,14 +3,20 @@ package com.gilbertcon.expensegeniespring5.controllers;
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
 import com.gilbertcon.expensegeniespring5.services.CategoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class CategoryController {
 
+    private static final String CATEGORY_CATEGORYFORM_URL = "category/categoryform";
     private final CategoryService categoryService;
 
     @GetMapping("/categories")
@@ -29,7 +35,7 @@ public class CategoryController {
 
         model.addAttribute("category", categoryCommand);
 
-        return "category/categoryform";
+        return CATEGORY_CATEGORYFORM_URL;
     }
 
     @GetMapping("/category/{categoryId}/update")
@@ -39,12 +45,21 @@ public class CategoryController {
 
         model.addAttribute("category", categoryCommand);
 
-        return "category/categoryform";
+        return CATEGORY_CATEGORYFORM_URL;
     }
 
-
     @PostMapping("/category")
-    public String saveCategory(@ModelAttribute CategoryCommand categoryCommand) {
+    public String saveCategory(@Valid @ModelAttribute("category") CategoryCommand categoryCommand, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+
+            return CATEGORY_CATEGORYFORM_URL;
+        }
+
         categoryService.saveCategoryCommand(categoryCommand);
         return "redirect:/";
     }

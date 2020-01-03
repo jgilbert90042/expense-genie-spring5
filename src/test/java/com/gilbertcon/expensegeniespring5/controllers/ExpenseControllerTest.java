@@ -97,16 +97,31 @@ class ExpenseControllerTest {
     }
 
     @Test
-    void saveOrUpdate() throws Exception {
+    void saveOrUpdateInvalid() throws Exception {
 
         mockMvc.perform(post("/expense")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
                 .param("description", "some string")
         )
+                .andExpect(status().isOk())
+                .andExpect(view().name("expense/expenseform"));
+    }
+
+    @Test
+    void saveOrUpdateValid() throws Exception {
+
+        mockMvc.perform(post("/expense")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+                .param("description", "some string")
+                .param("amount", "0.1")
+                .param("date","01/01/2001")
+        )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
+
 
     @Test
     void deleteExpense() throws Exception {
