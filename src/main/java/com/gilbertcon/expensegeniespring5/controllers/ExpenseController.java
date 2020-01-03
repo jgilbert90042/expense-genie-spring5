@@ -46,13 +46,15 @@ public class ExpenseController {
     }
 
     @PostMapping("/expense")
-    public String saveOrUpdate(@Valid @ModelAttribute("expense") ExpenseCommand command, BindingResult bindingResult) {
+    public String saveOrUpdate(@Valid @ModelAttribute("expense") ExpenseCommand command, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()) {
 
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.debug(objectError.toString());
             });
+
+            model.addAttribute("categoryList", categoryService.findAllCommand());
 
             return EXPENSE_EXPENSEFORM_URL;
         }
