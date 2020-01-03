@@ -88,6 +88,15 @@ public class CategoryControllerTest {
     }
 
     @Test
+    void updateCategoryBadNumber() throws Exception {
+
+        mockMvc.perform(get("/category/asdcx/update"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+
+    }
+
+    @Test
     void saveOrUpdate() throws Exception {
 
         mockMvc.perform(post("/category")

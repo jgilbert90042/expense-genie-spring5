@@ -86,6 +86,15 @@ class ExpenseControllerTest {
     }
 
     @Test
+    void updateExpenseBadNumber() throws Exception {
+
+        mockMvc.perform(get("/expense/asdcx/update"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+
+    }
+
+    @Test
     void saveOrUpdate() throws Exception {
 
         mockMvc.perform(post("/expense")
