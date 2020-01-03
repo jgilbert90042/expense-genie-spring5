@@ -2,15 +2,15 @@ package com.gilbertcon.expensegeniespring5.controllers;
 
 import com.gilbertcon.expensegeniespring5.command.CategoryCommand;
 import com.gilbertcon.expensegeniespring5.command.ExpenseCommand;
-import com.gilbertcon.expensegeniespring5.exceptions.NotFoundException;
 import com.gilbertcon.expensegeniespring5.services.CategoryService;
 import com.gilbertcon.expensegeniespring5.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
@@ -51,27 +51,4 @@ public class ExpenseController {
         return "redirect:/";
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFound(Exception e){
-
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("404error");
-        modelAndView.addObject("exception", e);
-
-        return modelAndView;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleBadNumber(Exception e){
-
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("400error");
-        modelAndView.addObject("exception", e);
-
-        return modelAndView;
-    }
 }
