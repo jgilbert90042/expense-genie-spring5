@@ -20,7 +20,6 @@
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please Correct Errors Below</p>
-                    Description:
                     <span class="help-block" th:if="${#fields.hasErrors('description')}">
                         <ul>
                             <li th:each="err : ${#fields.errors('description')}" th:text="${err}"/>

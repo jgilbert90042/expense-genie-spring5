@@ -103,6 +103,8 @@ class ExpenseControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
                 .param("description", "some string")
+                .param("date", "01/01-2021")
+                .param("amount", "9sw.00")
         )
                 .andExpect(status().isOk())
                 .andExpect(view().name("expense/expenseform"));

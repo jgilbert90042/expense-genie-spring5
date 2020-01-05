@@ -20,30 +20,12 @@
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please Correct Errors Below</p>
-                    <span class="help-block" th:if="${#fields.hasErrors('description')}">
-                        Description:
-                        <ul>
-                            <li th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
-                        </ul>
-                    </span>
-                    <span class="help-block" th:if="${#fields.hasErrors('date')}">
-                        Date:
-                        <ul>
-                            <li th:each="err : ${#fields.errors('date')}" th:text="${err}"/>
-                        </ul>
-                    </span>
-                    <span class="help-block" th:if="${#fields.hasErrors('amount')}">
-                        Amount:
-                        <ul>
-                            <li th:each="err : ${#fields.errors('amount')}" th:text="${err}"/>
-                        </ul>
-                    </span>
-                    <span class="help-block" th:if="${#fields.hasErrors('category')}">
-                        Category:
-                        <ul>
-                            <li th:each="err : ${#fields.errors('category')}" th:text="${err}"/>
-                        </ul>
-                    </span>
+                    <ul>
+                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
+                        <li th:each="err : ${#fields.errors('date')}" th:text="${err}"/>
+                        <li th:each="err : ${#fields.errors('amount')}" th:text="${err}"/>
+                        <li th:each="err : ${#fields.errors('category')}" th:text="${err}"/>
+                    </ul>
                 </div>
 
                 <input type="hidden" th:field="*{id}"/>
