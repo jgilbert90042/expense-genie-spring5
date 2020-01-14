@@ -19,7 +19,6 @@ jobs:
     environment:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
-      CODECOV_TOKEN: 85b5ecdf-eb6e-4121-8881-0958ca2af211
 
     steps:
       - checkout
@@ -43,7 +42,4 @@ jobs:
       # run tests!
       - run: mvn integration-test cobertura:cobertura
 
-      - store_test_results:
-          path: target/surefire-reports
-
-      - run: bash <(curl -s https://codecov.io/bash) -t 85b5ecdf-eb6e-4121-8881-0958ca2af211
+      - run: bash <(curl -s https://codecov.io/bash)
