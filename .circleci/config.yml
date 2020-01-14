@@ -19,6 +19,7 @@ jobs:
     environment:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
+      CODECOV_TOKEN: 85b5ecdf-eb6e-4121-8881-0958ca2af211
 
     steps:
       - checkout
@@ -40,4 +41,6 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn integration-test
+      - run: mvn integration-test cobertura:cobertura
+
+      - run: bash <(curl -s https://codecov.io/bash)
