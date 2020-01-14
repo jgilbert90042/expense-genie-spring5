@@ -42,4 +42,7 @@ jobs:
       # run tests!
       - run: mvn integration-test cobertura:cobertura
 
+      - store_test_results:
+          path: target/surefire-reports
+
       - run: bash <(curl -s https://codecov.io/bash)
