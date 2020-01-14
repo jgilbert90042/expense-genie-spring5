@@ -19,7 +19,7 @@ jobs:
     environment:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
-      CODECOV_TOKEN: 85b5ecdf-eb6e-4121-8881-0958ca2af211
+#      CODECOV_TOKEN: 85b5ecdf-eb6e-4121-8881-0958ca2af211
 
     steps:
       - checkout
@@ -31,7 +31,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: mvn install -DskipTests
+#      - run: mvn install -DskipTests
 
       - run: mvn dependency:go-offline
 
